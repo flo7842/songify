@@ -1,7 +1,7 @@
 import { verify } from 'jsonwebtoken';
 import { Request, Response } from 'express';
 
-// import DateException from "../exception/DateException";
+import DateException from "../exception/DateException";
 import EmailException from "../exception/EmailException";
 import PasswordException from "../exception/PasswordException";
 
@@ -25,7 +25,7 @@ export const registerMidd = (req: any, res: any, next: () => void) => {
     if (data && data.length === 0) {
         console.log('vide')
     }
-    const requiredFields = ['id','firstname', 'lastname', 'email', 'user_password', 'date_naissance', 'sexe', 'subscription', 'createdat', 'updateat', 'roles'];
+    const requiredFields = ['id','firstname', 'lastname', 'email', 'user_password', 'date_naissance', 'sexe', 'subscription', 'roles'];
 
     try{
         let error: boolean = true;
@@ -45,17 +45,27 @@ export const registerMidd = (req: any, res: any, next: () => void) => {
 
         if (textError.length > 0){
             textError = textError.slice(0, -2);
-            throw new Error(`Les champs ${textError} sont manquants.`);
+            //throw new Error(`Une ou plusieurs données obligatoire sont manquantes.`);
+            return res.status(400).json({ message: `Une ou plusieurs données obligatoire sont manquantes.`, data: error })
         }
 
-        // if (EmailException.checkEmail(data.email))
-        //     throw new EmailException;
+         if (EmailException.checkEmail(data.email))
+             throw new EmailException;
     
-         //if (!PasswordException.isValidPassword(data.password))
-          //   throw new PasswordException();
+         if (!PasswordException.isValidPassword(data.user_password))
+             throw new PasswordException();
 
-        // if (!DateException.checkDate(data.dateNaiss))
+        if (!DateException.checkDate(data.date_naissance))
+            throw new DateException();
+
+        // if (!DateException.checkDateTime(data.createdat))
         //     throw new DateException();
+
+        // if (!DateException.checkDateTime(data.updateat))
+        //     throw new DateException();
+        if(!error){
+            
+        }
 
         next();
 
@@ -90,11 +100,9 @@ export const loginMidd = (req: any, res: any, next: () => void) => {
 
         if (textError.length > 0){
             textError = textError.slice(0, -2);
-            throw new Error(`Les champs ${textError} sont manquants.`);
+            return res.status(400).json({ message: `Les champs ${textError} sont manquants.`, data: error })
         }
 
-        if (EmailException.checkEmail(data.email))
-            throw new EmailException;
     
         if (!PasswordException.isValidPassword(data.user_password))
             throw new PasswordException();
