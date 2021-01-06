@@ -1,4 +1,4 @@
-export type listeTables = "facture" | "creditcard" | "personne" | "song" | "user";
+export type listeTables = "user";
 
 interface attributSelectInterface {
     primaryKey: string;
@@ -12,26 +12,22 @@ interface attributSelectInterface {
  * @type {Array < string >}
  */
 const listAttributSelect: Record<listeTables, attributSelectInterface> = {
-    "personne": {
-        primaryKey: `id`,
-        attribut: [`id`, `firstname`, `lastname`, `date_naissance`, `sexe`, `created_at`, `updated_at`, `subscription`, `roles`]
-    },
-    "song": {
-        primaryKey: `idPays`,
-        attribut: [`idPays`, `nom`]
-    },
-    "facture": {
-        primaryKey: `personne_idpersonne`,
-        attribut: [`email`, `password`, `personne_idpersonne`]
-    },
-    "creditcard": {
-        primaryKey: `personne_id`,
-        attribut: [`email`, `password`, `personne_idpersonne`]
-    },
+    // "song": {
+    //     primaryKey: `idPays`,
+    //     attribut: [`idPays`, `nom`]
+    // },
+    // "facture": {
+    //     primaryKey: `personne_idpersonne`,
+    //     attribut: [`email`, `password`]
+    // },
+    // "creditcard": {
+    //     primaryKey: `personne_id`,
+    //     attribut: [`email`, `password`]
+    // },
     
     "user": {
         primaryKey: `id`,
-        attribut: [`id`, `email`, `lastname`, `date_naissance`, `sexe`, `created_at`, `updated_at`, `subscription`, `roles`]
+        attribut: [`id`, `firstname`, `lastname`, `email`, `user_password`, `date_naissance`, `sexe`, `subscription`, `createdat`, `updateat`, `roles`]
     },
 };
 
