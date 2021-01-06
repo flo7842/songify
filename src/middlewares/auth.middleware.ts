@@ -22,7 +22,10 @@ export const authMidd = (req: Request, res: Response, next: () => void) => {
 export const registerMidd = (req: any, res: any, next: () => void) => {
 
     let data: any = req.body;
-    const requiredFields = ['nom', 'prenom', 'dateNaiss', 'pays', 'adresse', 'ville', 'zipcode', 'email', 'password'];
+    if (data && data.length === 0) {
+        console.log('vide')
+    }
+    const requiredFields = ['id','firstname', 'lastname', 'email', 'user_password', 'date_naissance', 'sexe', 'subscription', 'createdat', 'updateat', 'roles'];
 
     try{
         let error: boolean = true;
@@ -45,11 +48,11 @@ export const registerMidd = (req: any, res: any, next: () => void) => {
             throw new Error(`Les champs ${textError} sont manquants.`);
         }
 
-        if (EmailException.checkEmail(data.email))
-            throw new EmailException;
+        // if (EmailException.checkEmail(data.email))
+        //     throw new EmailException;
     
-        if (!PasswordException.isValidPassword(data.password))
-            throw new PasswordException();
+         //if (!PasswordException.isValidPassword(data.password))
+          //   throw new PasswordException();
 
         // if (!DateException.checkDate(data.dateNaiss))
         //     throw new DateException();
@@ -63,8 +66,11 @@ export const registerMidd = (req: any, res: any, next: () => void) => {
 
 export const loginMidd = (req: any, res: any, next: () => void) => {
 
+
+
+    
     let data: any = req.body;
-    const requiredFields = ['email', 'password'];
+    const requiredFields = ['email', 'user_password'];
 
     try{
         let error: boolean = true;
@@ -90,12 +96,12 @@ export const loginMidd = (req: any, res: any, next: () => void) => {
         if (EmailException.checkEmail(data.email))
             throw new EmailException;
     
-        if (!PasswordException.isValidPassword(data.password))
+        if (!PasswordException.isValidPassword(data.user_password))
             throw new PasswordException();
 
         next();
 
     } catch(err) {
-        return res.status(401).json({error: true, message: err.message}).end(); // Generate error codes. 401 means unauthorized access.
+        return res.status(401).json({error: true, message: err.message}).end();
     }
 }
