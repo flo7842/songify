@@ -4,11 +4,11 @@ export interface UserInterface{
     lastname: string;
     email: string;
     user_password: string;
-    date_naissance: string;
+    date_naissance: any;
     sexe: string;
     subscription: boolean;
-    createdat: string;
-    updateat: string;
+    createdat: any;
+    updateat: any;
     roles: string;
     //save(): Promise <number>
 }

@@ -15,14 +15,14 @@ export default class User {
     public date_naissance: string;
     public sexe: string;
     public subscription: boolean;
-    public createdat: string;
+    public createdat: any;
     public updateat: string;
     public roles: string;
 
     protected table: string = 'user';
 
     constructor(id: number, firstname: string = '', lastname: string = '', email: string = '', user_password : string, date_naissance : string = '', sexe: string ='', 
-    subscription: boolean, createdat: string = '', updateat: string = '', roles: string = '') {
+    subscription: boolean, createdat: any, updateat: string = '', roles: string = '') {
 
     
 
@@ -39,7 +39,7 @@ export default class User {
         this.date_naissance = date_naissance;
         this.sexe = sexe;
         this.subscription = subscription;
-        this.createdat = createdat;
+        this.createdat = new Date();
         this.updateat = updateat;
         this.roles = roles;
     }
@@ -153,16 +153,18 @@ export default class User {
         })
     };
 
-    // static isExiste(email: string) {
-    //     return new Promise((resolve, reject) => {
-    //         MySQL.select('user', {email: email}).then((arrayClient: Array <any> ) => {
-    //             resolve((arrayClient.length > 0));
-    //         })
-    //         .catch((err: any) => {
-    //             console.log(err);
-    //             reject(false);
-    //         });
-    //     })
-    // }
+    static isExiste(email: string) {
+        return new Promise((resolve, reject) => {
+            User.select(email).then((arrayClient: Array <any> ) => {
+                resolve((arrayClient.length > 0));
+                
+            })
+            .catch((err: any) => {
+                console.log(err);
+                
+                reject(false);
+            });
+        })
+    }
 }
 
