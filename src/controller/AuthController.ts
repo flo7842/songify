@@ -64,7 +64,7 @@ export class AuthController {
             
             
             await user.save();
-            console.log(user)
+         
             
 
             const theToken: any = await sign({ id: user.id, name: user.fullname }, <string>process.env.JWT_KEY, {expiresIn: '5m'})

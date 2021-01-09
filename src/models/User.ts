@@ -7,8 +7,8 @@ import listAttributSelect, { listeTables } from '../utils/listAttributSelect';
  
 export default class User {
 
-    public id?: number | null | undefined;
-    public firstname?: string;
+    public id?: number | null;
+    public firstname: string;
     public lastname: string;
     public email: string;
     public user_password: string;
@@ -23,7 +23,7 @@ export default class User {
 
 
 
-    constructor(user: User | null, firstname: string = '', lastname: string = '', email: string = '', user_password : string, date_naissance : string = '', sexe: string ='', 
+    constructor(id: number | null, firstname: string = '', lastname: string = '', email: string = '', user_password : string, date_naissance : string = '', sexe: string ='', 
     subscription: boolean, createdat: string = '', updateat: string = '', roles: string = '') {
 
         function dateFormat (date: any, fstr: any, utc: any) {
@@ -49,7 +49,7 @@ export default class User {
         if (!PasswordException.isValidPassword(user_password))
             throw new PasswordException();
 
-            if (user === null) {
+         
                 this.firstname = firstname;
                 this.lastname = lastname;
                 this.email = email;
@@ -60,20 +60,10 @@ export default class User {
                 this.createdat = dateFormat (new Date (), "%Y-%m-%d %H:%M:%S", true);
                 this.updateat = dateFormat (new Date (), "%Y-%m-%d %H:%M:%S", true);
                 this.roles = roles;
-            } else { 
+            
 
-                this.id = user.id;
-                this.firstname = user.firstname;
-                this.lastname = user.lastname;
-                this.email = user.email;
-                this.user_password = user.user_password;
-                this.date_naissance = user.date_naissance;
-                this.sexe = user.sexe;
-                this.subscription = user.subscription;
-                this.createdat = dateFormat (new Date (), "%Y-%m-%d %H:%M:%S", true);
-                this.updateat = dateFormat (new Date (), "%Y-%m-%d %H:%M:%S", true);
-                this.roles = user.roles;
-            }
+               
+            
     }
 
     /************************* GETTER *************************/

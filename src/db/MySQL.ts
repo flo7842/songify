@@ -129,7 +129,7 @@ export default class MySQL {
             // Delete the last char (here, deletes the last coma ',')
             columns = columns.slice(0, -1);
             parameters = parameters.slice(0, -1);
-            console.log("Les data " + data)
+            
             let dataInsert = `${columns} = ${parameters}`
             // Run SQL Query
             bdd.query(`UPDATE ${table} SET ${columns} WHERE id = ${instance.id}`, data, (error, results, fields) => {

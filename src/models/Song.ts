@@ -55,25 +55,7 @@ export default class Song {
             });
         })
     };
-    // /**
-    //  *
-    //  * Save to the property in database
-    //  * @returns {Promise < number >}
-    //  * @memberof Song
-    //  */
-    // update(): Promise <number> {
-    //     return new Promise((resolve, reject) => {
-    //         MySQL.update(this.table, this).then((id: number) => {
-    //             this.id = id;
-    //             console.log(`Save ${this.table}`);
-    //             resolve(id);
-    //         })
-    //         .catch((err: any) => {
-    //             console.log(err);
-    //             reject(false);
-    //         });
-    //     })
-    // };
+
 
     static isExiste(email: string) {
         return new Promise((resolve, reject) => {
