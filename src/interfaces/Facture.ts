@@ -1,4 +1,7 @@
-export interface FactureInterface{
+import { UserInterface } from './User';
+
+
+export interface FactureInterface extends UserInterface{
     id?: number | null | undefined;
     date_payment: string;
     montant_ht: string;
@@ -6,5 +9,5 @@ export interface FactureInterface{
     source: string;
     created_at: any;
     update_at: string;
-    user_id: boolean;
+    user_id: number;
 }

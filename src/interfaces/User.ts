@@ -10,5 +10,4 @@ export interface UserInterface{
     createdat: any;
     updateat: any;
     roles: string;
-    //save(): Promise <number>
 }

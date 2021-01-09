@@ -6,7 +6,7 @@ import cors from "cors";
 import { registerMidd } from "./src/middlewares/auth.middleware";
 import { AuthController } from "./src/controller/AuthController";
 import { AuthentificationRoute } from "./src/routes/AuthentificationRoute";
-import { route } from "./src/routes/UpdateUserRoute";
+import { UpdateUserRoute } from "./src/routes/UpdateUserRoute";
 const path = require('path');
 
 config(); //process.env
@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname+'/public/index.html'))
 })
-
+app.use('/user', UpdateUserRoute);
 app.use('/auth', AuthentificationRoute);
 
 

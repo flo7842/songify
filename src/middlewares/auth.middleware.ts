@@ -45,7 +45,7 @@ export const registerMidd = (req: any, res: any, next: () => void) => {
 
         if (textError.length > 0){
             textError = textError.slice(0, -2);
-            //throw new Error(`Une ou plusieurs données obligatoire sont manquantes.`);
+           
             return res.status(400).json({ message: `Une ou plusieurs données obligatoire sont manquantes.`, data: error })
         }
 
@@ -56,16 +56,9 @@ export const registerMidd = (req: any, res: any, next: () => void) => {
              throw new PasswordException();
 
         if (!DateException.checkDate(data.date_naissance))
-            throw new DateException();
+            return res.status(400).json({ message: `La date n\'est pas au bon format.`, data: error })
 
-        // if (!DateException.checkDateTime(data.createdat))
-        //     throw new DateException();
-
-        // if (!DateException.checkDateTime(data.updateat))
-        //     throw new DateException();
-        if(!error){
-            
-        }
+         
 
         next();
 
@@ -100,7 +93,7 @@ export const loginMidd = (req: any, res: any, next: () => void) => {
 
         if (textError.length > 0){
             textError = textError.slice(0, -2);
-            return res.status(400).json({ message: `Les champs ${textError} sont manquants.`, data: error })
+            return res.status(400).json({ message: `${textError} manquants.`, data: error })
         }
 
     

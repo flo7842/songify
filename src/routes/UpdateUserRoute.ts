@@ -1,12 +1,17 @@
 import { Router } from 'express';
 import { Request, Response } from 'express';
 import { UserController } from '../controller/UserController';
-import { registerMidd, authMidd, loginMidd } from '../middlewares/auth.middleware';
+import { userMidd } from '../middlewares/user.middleware';
+
 
 
 
 const route: Router = Router();
 
-route.put('/user', UserController.update);
+route.get('/', userMidd, (req: any, res: any) => {
+    return res.end('<h1>You signed in correctly!</h1>');
+})
 
-export { route }
+route.put('/user', userMidd, UserController.update);
+
+export { route as UpdateUserRoute }

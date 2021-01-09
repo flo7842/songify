@@ -36,27 +36,6 @@ export default class Song {
     };
     
 
-    //         // MySQL.selectJoin('user', join, where).then((arrayClient: Array <any>) => {
-    //         //    // let newPersonne: Personne;
-    //         //    // let data: Array <Personne> = [];
-
-    //         //     for (const personne of arrayClient) {
-    //         //         personne.dateNaiss = new String(personne.dateNaiss)
-    //         //         personne.id = personne.idpersonne;
-    //         //         //newPersonne = new Personne(personne);
-    //         //         //data.push(new User(newPersonne, personne.email, personne.user_password));
-    //         //     }
-                
-    //         //     console.log(data);
-    //         //     resolve(data);
-    //         // })
-    //         // .catch((err: any) => {
-    //         //     console.log(err);
-    //         //     reject(false)
-    //         // });
-    //     })
-    // }
-
     /**
      *
      * Save to the property in database

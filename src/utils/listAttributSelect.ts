@@ -1,4 +1,4 @@
-export type listeTables = "user" | "song";
+export type listeTables = "user" | "song" | "facture";
 
 interface attributSelectInterface {
     primaryKey: string;
@@ -16,10 +16,10 @@ const listAttributSelect: Record<listeTables, attributSelectInterface> = {
         primaryKey: `idPays`,
         attribut: [`idPays`, `nom`]
     },
-    // "facture": {
-    //     primaryKey: `personne_idpersonne`,
-    //     attribut: [`email`, `password`]
-    // },
+    "facture": {
+        primaryKey: `id`,
+        attribut: [`id`, `date_payment`, `montant_ttc`, `source`, `created_at`, `update_at`, `user_id`]
+    },
     // "creditcard": {
     //     primaryKey: `personne_id`,
     //     attribut: [`email`, `password`]

@@ -2,6 +2,8 @@ import { createConnection, Connection } from 'mysql';
 import listAttributSelect, { listeTables } from '../utils/listAttributSelect';
 import User from '../models/User';
 import Song from '../models/Song';
+import Facture from '../models/Facture';
+import CreditCard from '../models/CreditCard';
 
 
 export interface jointureInterface{
@@ -26,23 +28,22 @@ export default class MySQL {
      * Insertion of any defined entity
      * @static
      * @param {string} table 
-     * @param {(User)} insert
+     * @param {(User | Facture | CreditCard | Song)} insert
      * @returns {Promise <number>}
      * @memberof MySQL
      */
-    static insert(table: string, instance: User | Song): Promise<number> {
+    static insert(table: string, instance: User | CreditCard | Facture | Song): Promise<number> {
         return new Promise((resolve, reject) => {
-        // return Promise because of the processing time of the database
-        // The only way to get a return is using wether "resolve()" or "reject()"
+        
 
-            // Init params to database
+            // Initialize params of database
             const bdd: Connection = createConnection({
                 host: process.env.DB_HOST,
                 user: process.env.DB_USER,
                 password: process.env.DB_PASS,
                 database: process.env.DB_DATABASE,
-                // socketPath: process.env.SOCKETPATH, // Mandatory socket for UNIX
-                port: parseInt((process.env.PORTMYSQL === undefined) ? '3306' : process.env.PORTMYSQL) // 3306 mysql default port
+                
+                port: parseInt((process.env.PORTMYSQL === undefined) ? '3306' : process.env.PORTMYSQL) 
             })
 
             // Open database connection
@@ -87,23 +88,22 @@ export default class MySQL {
      * Insertion of any defined entity
      * @static
      * @param {string} table 
-     * @param {(User)} update
+     * @param {(User | Facture | CreditCard | Song)} update
      * @returns {Promise <number>}
      * @memberof MySQL
      */
     static update(table: string, instance: User): Promise<number> {
         return new Promise((resolve, reject) => {
-        // return Promise because of the processing time of the database
-        // The only way to get a return is using wether "resolve()" or "reject()"
+    
 
-            // Init params to database
+            // Initialize params of database
             const bdd: Connection = createConnection({
                 host: process.env.DB_HOST,
                 user: process.env.DB_USER,
                 password: process.env.DB_PASS,
                 database: process.env.DB_DATABASE,
-                // socketPath: process.env.SOCKETPATH, // Mandatory socket for UNIX
-                port: parseInt((process.env.PORTMYSQL === undefined) ? '3306' : process.env.PORTMYSQL) // 3306 mysql default port
+             
+                port: parseInt((process.env.PORTMYSQL === undefined) ? '3306' : process.env.PORTMYSQL) 
             })
 
             // Open database connection
@@ -152,7 +152,7 @@ export default class MySQL {
      * Select of any defined entity
      * @static
      * @param {string} table 
-     * @param {(User)} insert
+     * @param {(User | Facture | CreditCard | Song)} insert
      * @returns {any}
      * @memberof MySQL
      */
@@ -176,17 +176,11 @@ export default class MySQL {
             let columns = "";
             let conditionWhere = "";
 
-            // const key = listAttributSelect[table].attribut; // select is the method from the Class Personne or Client => Array<string>
-
-            // for (const champs of key) {
-            //     columns += "`" + champs + "`,";
-            // }
-
             for (const key in where) {
                 conditionWhere += "`" + key + "` LIKE ? and ";
                 data.push(where[key])
             }
-            //console.log(where)
+            
             conditionWhere = conditionWhere.slice(0, -5);
             columns = columns.slice(0, -1);
             
