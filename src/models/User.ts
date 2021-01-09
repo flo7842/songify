@@ -1,4 +1,4 @@
-import MySQL, { jointureInterface } from "../db/MySQL";
+import MySQL from "../db/MySQL";
 import EmailException from "../exception/EmailException";
 import PasswordException from "../exception/PasswordException";
 import { UserInterface } from '../interfaces/User';
@@ -7,8 +7,8 @@ import listAttributSelect, { listeTables } from '../utils/listAttributSelect';
  
 export default class User {
 
-    public id: number | null | undefined;
-    public firstname: string;
+    public id?: number | null | undefined;
+    public firstname?: string;
     public lastname: string;
     public email: string;
     public user_password: string;
@@ -21,10 +21,27 @@ export default class User {
 
     protected table: string = 'user';
 
-    constructor(id: number | null, firstname: string = '', lastname: string = '', email: string = '', user_password : string, date_naissance : string = '', sexe: string ='', 
-    subscription: boolean, createdat: any, updateat: string = '', roles: string = '') {
 
-    
+
+    constructor(user: User | null, firstname: string = '', lastname: string = '', email: string = '', user_password : string, date_naissance : string = '', sexe: string ='', 
+    subscription: boolean, createdat: string = '', updateat: string = '', roles: string = '') {
+
+        function dateFormat (date: any, fstr: any, utc: any) {
+            utc = utc ? 'getUTC' : 'get';
+            return fstr.replace (/%[YmdHMS]/g, function (m: any) {
+              switch (m) {
+              case '%Y': return date[utc + 'FullYear'] (); // no leading zeros required
+              case '%m': m = 1 + date[utc + 'Month'] (); break;
+              case '%d': m = date[utc + 'Date'] (); break;
+              case '%H': m = date[utc + 'Hours'] (); break;
+              case '%M': m = date[utc + 'Minutes'] (); break;
+              case '%S': m = date[utc + 'Seconds'] (); break;
+              default: return m.slice (1); // unknown code, remove %
+              }
+              // add leading zero if required
+              return ('0' + m).slice (-2);
+            });
+          }
 
          if (EmailException.checkEmail(email))
              throw new EmailException;
@@ -32,20 +49,36 @@ export default class User {
         if (!PasswordException.isValidPassword(user_password))
             throw new PasswordException();
 
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.user_password = user_password;
-        this.date_naissance = date_naissance;
-        this.sexe = sexe;
-        this.subscription = subscription;
-        this.createdat = createdat;
-        this.updateat = updateat;
-        this.roles = roles;
+            if (user === null) {
+                this.firstname = firstname;
+                this.lastname = lastname;
+                this.email = email;
+                this.user_password = user_password;
+                this.date_naissance = date_naissance;
+                this.sexe = sexe;
+                this.subscription = subscription;
+                this.createdat = dateFormat (new Date (), "%Y-%m-%d %H:%M:%S", true);
+                this.updateat = dateFormat (new Date (), "%Y-%m-%d %H:%M:%S", true);
+                this.roles = roles;
+            } else { 
+
+                this.id = user.id;
+                this.firstname = user.firstname;
+                this.lastname = user.lastname;
+                this.email = user.email;
+                this.user_password = user.user_password;
+                this.date_naissance = user.date_naissance;
+                this.sexe = user.sexe;
+                this.subscription = user.subscription;
+                this.createdat = dateFormat (new Date (), "%Y-%m-%d %H:%M:%S", true);
+                this.updateat = dateFormat (new Date (), "%Y-%m-%d %H:%M:%S", true);
+                this.roles = user.roles;
+            }
     }
 
     /************************* GETTER *************************/
+
+    
 
     get attributInsert(): Array < string > {
         return ['id', 'firstname', 'lastname', 'email', 'user_password', 'date_naissance', 'sexe', 'subscription', 'createdat', 'updateat', 'roles']
@@ -55,28 +88,6 @@ export default class User {
         return this.firstname + ' ' + this.lastname;
     }
     
-
-    //         // MySQL.selectJoin('user', join, where).then((arrayClient: Array <any>) => {
-    //         //    // let newPersonne: Personne;
-    //         //    // let data: Array <Personne> = [];
-
-    //         //     for (const personne of arrayClient) {
-    //         //         personne.dateNaiss = new String(personne.dateNaiss)
-    //         //         personne.id = personne.idpersonne;
-    //         //         //newPersonne = new Personne(personne);
-    //         //         //data.push(new User(newPersonne, personne.email, personne.user_password));
-    //         //     }
-                
-    //         //     console.log(data);
-    //         //     resolve(data);
-    //         // })
-    //         // .catch((err: any) => {
-    //         //     console.log(err);
-    //         //     reject(false)
-    //         // });
-    //     })
-    // }
-
     /**
      *
      * Save to the property in database

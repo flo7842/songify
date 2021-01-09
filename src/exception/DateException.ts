@@ -1,7 +1,7 @@
 export default class DateException extends Error {
 
     constructor() {
-        super('Date is not valid')
+        super('La date n\'est pas au bon format')
     }
 
     static checkDate(date: string): boolean {
