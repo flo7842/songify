@@ -11,7 +11,8 @@ export class AuthController {
         
         let data: any = req.body;
         try{
-            let users: any = await User.select(data.email);
+
+            let users: any = await MySQL.select(data.email);
             console.log(users)
             
             if (users.length <= 0){
@@ -20,21 +21,21 @@ export class AuthController {
            
             
                 
-                const isOk = await PasswordException.comparePassword(data.user_password, users[0].user_password);
-                console.log(isOk)
-                if(!isOk){
-                    throw new Error('Password is not correct!');
-                }
-                console.log(isOk)
-                
+            const isOk = await PasswordException.comparePassword(data.user_password, users[0].user_password);
+            console.log(isOk)
+            if(!isOk){
+                throw new Error('Password is not correct!');
+            }
+            console.log(isOk)
+            
 
-                const theToken: any = await sign({ id: users.id, name: users.fullname }, <string> process.env.JWT_KEY, { expiresIn: '1m' });
-        
-                const token = {
-                    token: theToken,
-                    expired: await (<any> decode(theToken)).exp
-                }
-                console.log('connecté');
+            const theToken: any = await sign({ id: users.id, name: users.fullname }, <string> process.env.JWT_KEY, { expiresIn: '1m' });
+    
+            const token = {
+                token: theToken,
+                expired: await (<any> decode(theToken)).exp
+            }
+            console.log('connecté');
 
             
             

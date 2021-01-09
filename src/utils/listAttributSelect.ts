@@ -1,4 +1,4 @@
-export type listeTables = "user";
+export type listeTables = "user" | "song";
 
 interface attributSelectInterface {
     primaryKey: string;
@@ -12,10 +12,10 @@ interface attributSelectInterface {
  * @type {Array < string >}
  */
 const listAttributSelect: Record<listeTables, attributSelectInterface> = {
-    // "song": {
-    //     primaryKey: `idPays`,
-    //     attribut: [`idPays`, `nom`]
-    // },
+    "song": {
+        primaryKey: `idPays`,
+        attribut: [`idPays`, `nom`]
+    },
     // "facture": {
     //     primaryKey: `personne_idpersonne`,
     //     attribut: [`email`, `password`]
